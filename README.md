@@ -71,7 +71,7 @@ Once the application is up and running, follow these steps to use the applicatio
 
 Upon accessing the application, you will be prompted to upload the identification document. This can be either a **Driver's License** or a **Passport**.
 
-![Upload Document Screenshot](path/to/upload_screenshot.png)
+![Upload Document Screenshot](images/Upload.png)
 
 ### Auto Rotation
 
@@ -88,7 +88,7 @@ If the automated rotation does not properly center your document, use the rotati
 - **Rotate Left:** Click the left arrow to rotate the image 90 degrees counterclockwise.
 - **Rotate Right:** Click the right arrow to rotate the image 90 degrees clockwise.
 
-![Rotation UI Screenshot](path/to/manual_rotation_screenshot.png)
+![Rotation UI Screenshot](images/Rotated.png)
 
 ### Extracted KYC Information
 
@@ -96,7 +96,7 @@ If the automated rotation does not properly center your document, use the rotati
 
 Once you are satisfied with the document's orientation, submit the image for processing. The application will display the extracted KYC information in a structured JSON format.
 
-![Extracted KYC Information Screenshot](path/to/extracted_kyc_screenshot.png)
+![Extracted KYC Information Screenshot](images/KYC_Extracted.png)
 
 ## Contact
 If you have any questions, please reach out to **Ankith Indrakumar** at [ankithindrakumar@gmail.com](mailto:ankithindrakumar@gmail.com).
