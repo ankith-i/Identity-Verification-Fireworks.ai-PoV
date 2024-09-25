@@ -88,7 +88,7 @@ If the automated rotation does not properly center your document, use the rotati
 - **Rotate Left:** Click the left arrow to rotate the image 90 degrees counterclockwise.
 - **Rotate Right:** Click the right arrow to rotate the image 90 degrees clockwise.
 
-![Rotation UI Screenshot](path/to/manual_rotation_screenshot.png)
+![Rotation UI Screenshot](images/Rotated.png)
 
 ### Extracted KYC Information
 
