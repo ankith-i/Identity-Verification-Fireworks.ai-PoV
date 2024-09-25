@@ -96,7 +96,7 @@ If the automated rotation does not properly center your document, use the rotati
 
 Once you are satisfied with the document's orientation, submit the image for processing. The application will display the extracted KYC information in a structured JSON format.
 
-![Extracted KYC Information Screenshot](path/to/extracted_kyc_screenshot.png)
+![Extracted KYC Information Screenshot](images/KYC_Extracted.png)
 
 ## Contact
 If you have any questions, please reach out to **Ankith Indrakumar** at [ankithindrakumar@gmail.com](mailto:ankithindrakumar@gmail.com).
