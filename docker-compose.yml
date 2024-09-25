@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./front-end
+    container_name: frontend
+    ports:
+      - "5173:5173"  # Expose port 5173 for Vite
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./back-end
+    container_name: backend
+    ports:
+      - "5000:5000"  # Expose port 5000 for Flask
+    environment:
+      - FLASK_ENV=development
+    command: python app.py
