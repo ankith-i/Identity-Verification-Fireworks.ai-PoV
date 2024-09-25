@@ -1,6 +1,3 @@
-# app.py
-
-# Import necessary libraries
 import base64
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -16,6 +13,8 @@ import re
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 import logging
+import asyncio  # To handle async tasks
+import concurrent.futures  # For running synchronous code asynchronously
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS to accept requests from the frontend
@@ -84,8 +83,23 @@ def correct_image_orientation_high_res_pil(image):
         logger.error(f"Error in correct_image_orientation_high_res_pil: {e}")
         return image  # Return the original image if rotation fails
 
+async def async_fireworks_completion(messages, response_format):
+    """
+    Runs the Fireworks API completion call asynchronously using asyncio and a thread executor.
+    """
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None, 
+        lambda: fireworks.client.ChatCompletion.create(
+            model="accounts/fireworks/models/phi-3-vision-128k-instruct",
+            messages=messages,
+            response_format=response_format,
+            temperature=0.1
+        )
+    )
+
 @app.route('/', methods=['POST'])
-def rotate_image():
+async def rotate_image():
     if 'document' not in request.files:
         return jsonify({'error': 'No file part'}), 400
     file = request.files['document']
@@ -97,7 +111,8 @@ def rotate_image():
         image = Image.open(file.stream)
 
         # Correct the image orientation using the ML model
-        image = correct_image_orientation_high_res_pil(image)
+        loop = asyncio.get_event_loop()
+        image = await loop.run_in_executor(None, correct_image_orientation_high_res_pil, image)
 
         # Ensure image is in RGB mode
         if image.mode in ("RGBA", "P", "LA"):
@@ -118,7 +133,7 @@ def rotate_image():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/process', methods=['POST'])
-def process_image():
+async def process_image():
     try:
         data = request.get_json()
         if not data or 'image' not in data:
@@ -184,7 +199,7 @@ def process_image():
                     "}\n\n"
                     "Now, analyze the uploaded image and extract the KYC information."
                 )
-        
+
         messages = [{
             "role": "user",
             "content": [{
@@ -203,14 +218,11 @@ def process_image():
             "schema": KYCResult.model_json_schema()
         }
 
-        response = fireworks.client.ChatCompletion.create(
-            model="accounts/fireworks/models/phi-3-vision-128k-instruct",
-            messages=messages,
-            response_format=response_format,
-            temperature=0.1
-        )
+        # Run Fireworks completion asynchronously
+        response = await async_fireworks_completion(messages, response_format)
 
         output_data = json.loads(response.choices[0].message.content)
+
         # Post-process the data
         if 'Date of Birth' in output_data:
             dob = output_data['Date of Birth']
