@@ -71,7 +71,7 @@ Once the application is up and running, follow these steps to use the applicatio
 
 Upon accessing the application, you will be prompted to upload the identification document. This can be either a **Driver's License** or a **Passport**.
 
-![Upload Document Screenshot](path/to/upload_screenshot.png)
+![Upload Document Screenshot](images/Upload.png)
 
 ### Auto Rotation
 
